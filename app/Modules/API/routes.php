@@ -1,23 +1,23 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
-Route::group(['prefix' => 'api', 'middleware' => 'web', 'namespace' => 'FI\Modules\API\Controllers'], function ()
-{
-    Route::group(['middleware' => 'auth.admin'], function ()
-    {
+Route::group(['prefix' => 'api', 'middleware' => 'web', 'namespace' => 'FI\Modules\API\Controllers'], function () {
+    Route::group(['middleware' => 'auth.admin'], function () {
         Route::post('generate_keys', ['uses' => 'ApiKeyController@generateKeys', 'as' => 'api.generateKeys']);
     });
 
-    Route::group(['middleware' => 'auth.api'], function ()
-    {
+    Route::group(['middleware' => 'auth.api'], function () {
         Route::post('clients/list', ['uses' => 'ApiClientController@lists']);
         Route::post('clients/show', ['uses' => 'ApiClientController@show']);
         Route::post('clients/store', ['uses' => 'ApiClientController@store']);

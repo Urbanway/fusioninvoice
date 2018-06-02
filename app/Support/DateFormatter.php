@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Support;
@@ -16,53 +19,6 @@ use DateTime;
 
 class DateFormatter
 {
-    /**
-     * Returns an array of date format options.
-     *
-     * @return array
-     */
-    static function formats()
-    {
-        return [
-            'm/d/Y' => [
-                'setting'    => 'm/d/Y',
-                'datepicker' => 'mm/dd/yyyy',
-            ],
-            'm-d-Y' => [
-                'setting'    => 'm-d-Y',
-                'datepicker' => 'mm-dd-yyyy',
-            ],
-            'm.d.Y' => [
-                'setting'    => 'm.d.Y',
-                'datepicker' => 'mm.dd.yyyy',
-            ],
-            'Y/m/d' => [
-                'setting'    => 'Y/m/d',
-                'datepicker' => 'yyyy/mm/dd',
-            ],
-            'Y-m-d' => [
-                'setting'    => 'Y-m-d',
-                'datepicker' => 'yyyy-mm-dd',
-            ],
-            'Y.m.d' => [
-                'setting'    => 'Y.m.d',
-                'datepicker' => 'yyyy.mm.dd',
-            ],
-            'd/m/Y' => [
-                'setting'    => 'd/m/Y',
-                'datepicker' => 'dd/mm/yyyy',
-            ],
-            'd-m-Y' => [
-                'setting'    => 'd-m-Y',
-                'datepicker' => 'dd-mm-yyyy',
-            ],
-            'd.m.Y' => [
-                'setting'    => 'd.m.Y',
-                'datepicker' => 'dd.mm.yyyy',
-            ],
-        ];
-    }
-
     /**
      * Returns a flattened version of the format() method array to display as dropdown options.
      *
@@ -74,8 +30,7 @@ class DateFormatter
 
         $return = [];
 
-        foreach ($formats as $format)
-        {
+        foreach ($formats as $format) {
             $return[$format['setting']] = $format['setting'];
         }
 
@@ -83,18 +38,64 @@ class DateFormatter
     }
 
     /**
+     * Returns an array of date format options.
+     *
+     * @return array
+     */
+    static function formats()
+    {
+        return [
+            'm/d/Y' => [
+                'setting' => 'm/d/Y',
+                'datepicker' => 'mm/dd/yyyy',
+            ],
+            'm-d-Y' => [
+                'setting' => 'm-d-Y',
+                'datepicker' => 'mm-dd-yyyy',
+            ],
+            'm.d.Y' => [
+                'setting' => 'm.d.Y',
+                'datepicker' => 'mm.dd.yyyy',
+            ],
+            'Y/m/d' => [
+                'setting' => 'Y/m/d',
+                'datepicker' => 'yyyy/mm/dd',
+            ],
+            'Y-m-d' => [
+                'setting' => 'Y-m-d',
+                'datepicker' => 'yyyy-mm-dd',
+            ],
+            'Y.m.d' => [
+                'setting' => 'Y.m.d',
+                'datepicker' => 'yyyy.mm.dd',
+            ],
+            'd/m/Y' => [
+                'setting' => 'd/m/Y',
+                'datepicker' => 'dd/mm/yyyy',
+            ],
+            'd-m-Y' => [
+                'setting' => 'd-m-Y',
+                'datepicker' => 'dd-mm-yyyy',
+            ],
+            'd.m.Y' => [
+                'setting' => 'd.m.Y',
+                'datepicker' => 'dd.mm.yyyy',
+            ],
+        ];
+    }
+
+    /**
      * Converts a stored date to the user formatted date.
      *
-     * @param string $date The yyyy-mm-dd standardized date
-     * @param bool $includeTime Whether or not to include the time
+     * @param string $date        The yyyy-mm-dd standardized date
+     * @param bool   $includeTime Whether or not to include the time
      * @return string             The user formatted date
      */
     public static function format($date = null, $includeTime = false)
     {
         $date = new DateTime($date);
 
-        if (!$includeTime)
-        {
+        if (!$includeTime) {
             return $date->format(config('fi.dateFormat'));
         }
 
@@ -109,8 +110,7 @@ class DateFormatter
      */
     public static function unformat($userDate = null)
     {
-        if ($userDate)
-        {
+        if ($userDate) {
             $date = DateTime::createFromFormat(config('fi.dateFormat'), $userDate);
 
             return $date->format('Y-m-d');
@@ -122,8 +122,8 @@ class DateFormatter
     /**
      * Adds a specified number of days to a yyyy-mm-dd formatted date.
      *
-     * @param  string $date The date
-     * @param  int $numDays The number of days to increment
+     * @param  string $date    The date
+     * @param  int    $numDays The number of days to increment
      * @return string The yyyy-mm-dd standardized incremented date
      */
     public static function incrementDateByDays($date, $numDays)
@@ -138,17 +138,16 @@ class DateFormatter
     /**
      * Adds a specified number of periods to a yyyy-mm-dd formatted date.
      *
-     * @param  date $date The date
-     * @param  int $period 1 = Days, 2 = Weeks, 3 = Months, 4 = Years
-     * @param  int $numPeriods The number of periods to increment
+     * @param  date $date       The date
+     * @param  int  $period     1 = Days, 2 = Weeks, 3 = Months, 4 = Years
+     * @param  int  $numPeriods The number of periods to increment
      * @return string The yyyy-mm-dd standardized incremented date
      */
     public static function incrementDate($date, $period, $numPeriods)
     {
         $date = DateTime::createFromFormat('Y-m-d', $date);
 
-        switch ($period)
-        {
+        switch ($period) {
             case 1:
                 $date->add(new DateInterval('P' . $numPeriods . 'D'));
                 break;

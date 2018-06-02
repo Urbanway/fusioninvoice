@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\TaxRates\Models;
@@ -64,23 +67,19 @@ class TaxRate extends Model
 
     public function getInUseAttribute()
     {
-        if (InvoiceItem::where('tax_rate_id', $this->id)->orWhere('tax_rate_2_id', $this->id)->count())
-        {
+        if (InvoiceItem::where('tax_rate_id', $this->id)->orWhere('tax_rate_2_id', $this->id)->count()) {
             return true;
         }
 
-        if (RecurringInvoiceItem::where('tax_rate_id', $this->id)->orWhere('tax_rate_2_id', $this->id)->count())
-        {
+        if (RecurringInvoiceItem::where('tax_rate_id', $this->id)->orWhere('tax_rate_2_id', $this->id)->count()) {
             return true;
         }
 
-        if (QuoteItem::where('tax_rate_id', $this->id)->orWhere('tax_rate_2_id', $this->id)->count())
-        {
+        if (QuoteItem::where('tax_rate_id', $this->id)->orWhere('tax_rate_2_id', $this->id)->count()) {
             return true;
         }
 
-        if (config('fi.itemTaxRate') == $this->id or config('fi.itemTax2Rate') == $this->id)
-        {
+        if (config('fi.itemTaxRate') == $this->id or config('fi.itemTax2Rate') == $this->id) {
             return true;
         }
 

@@ -1,21 +1,24 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Currencies\Controllers;
 
 use FI\Http\Controllers\Controller;
 use FI\Modules\Currencies\Models\Currency;
-use FI\Modules\Currencies\Support\CurrencyConverterFactory;
 use FI\Modules\Currencies\Requests\CurrencyStoreRequest;
 use FI\Modules\Currencies\Requests\CurrencyUpdateRequest;
+use FI\Modules\Currencies\Support\CurrencyConverterFactory;
 use FI\Traits\ReturnUrl;
 
 class CurrencyController extends Controller
@@ -70,12 +73,9 @@ class CurrencyController extends Controller
     {
         $currency = Currency::find($id);
 
-        if ($currency->in_use)
-        {
+        if ($currency->in_use) {
             $alert = trans('fi.cannot_delete_record_in_use');
-        }
-        else
-        {
+        } else {
             Currency::destroy($id);
 
             $alert = trans('fi.record_successfully_deleted');

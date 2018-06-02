@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Requests;
@@ -30,16 +33,13 @@ class SendEmailRequest extends FormRequest
 
     public function rules()
     {
-        Validator::extend('emails', function ($attribute, $value, $parameters)
-        {
-            foreach ($value as $email)
-            {
+        Validator::extend('emails', function ($attribute, $value, $parameters) {
+            foreach ($value as $email) {
                 $data = ['email' => trim($email)];
 
                 $validator = Validator::make($data, ['email' => 'required|email']);
 
-                if ($validator->fails())
-                {
+                if ($validator->fails()) {
                     return false;
                 }
             }
@@ -49,10 +49,10 @@ class SendEmailRequest extends FormRequest
 
         $rules = [
             'subject' => 'required',
-            'body'    => 'required',
-            'to'      => 'required|emails',
-            'cc'      => 'emails',
-            'bcc'     => 'emails',
+            'body' => 'required',
+            'to' => 'required|emails',
+            'cc' => 'emails',
+            'bcc' => 'emails',
         ];
 
         return $rules;

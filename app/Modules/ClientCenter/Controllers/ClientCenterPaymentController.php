@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\ClientCenter\Controllers;
@@ -19,8 +22,7 @@ class ClientCenterPaymentController extends Controller
     public function index()
     {
         $payments = Payment::with('invoice.amount.invoice.currency', 'invoice.client')
-            ->whereHas('invoice', function ($invoice)
-            {
+            ->whereHas('invoice', function ($invoice) {
                 $invoice->where('client_id', auth()->user()->client->id);
             })->orderBy('created_at', 'desc')
             ->paginate(config('fi.resultsPerPage'));

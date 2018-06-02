@@ -1,7 +1,7 @@
 <script type="text/javascript">
-    $(function () {
-        $('textarea.custom-form-field').autosize();
-    });
+  $(function () {
+    autosize($('textarea.custom-form-field'));
+  });
 </script>
 
 @foreach ($customFields as $customField)

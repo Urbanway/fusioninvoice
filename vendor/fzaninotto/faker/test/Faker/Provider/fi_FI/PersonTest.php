@@ -4,7 +4,7 @@ namespace Faker\Test\Provider\fi_FI;
 
 use Faker\Generator;
 use Faker\Provider\DateTime;
-use Faker\Provider\fi_FI\Person;
+use Faker\Provider\fi_UW\Person;
 
 class PersonTest extends \PHPUnit_Framework_TestCase
 {

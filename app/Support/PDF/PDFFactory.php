@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Support\PDF;
@@ -25,10 +28,9 @@ class PDFFactory
     public static function getDrivers()
     {
         $driverFiles = Directory::listContents(app_path('Support/PDF/Drivers'));
-        $drivers     = [];
+        $drivers = [];
 
-        foreach ($driverFiles as $driverFile)
-        {
+        foreach ($driverFiles as $driverFile) {
             $driver = str_replace('.php', '', $driverFile);
 
             $drivers[$driver] = $driver;

@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Sessions\Controllers;
@@ -21,20 +24,18 @@ class SessionController extends Controller
         deleteTempFiles();
         deleteViewCache();
 
-        return view('sessions.login');
+        return view('sessions.login')->with('skin', config('fi.skin'));
     }
 
     public function attempt(SessionRequest $request)
     {
         $rememberMe = ($request->input('remember_me')) ? true : false;
 
-        if (!auth()->attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $rememberMe))
-        {
+        if (!auth()->attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $rememberMe)) {
             return redirect()->route('session.login')->with('error', trans('fi.invalid_credentials'));
         }
 
-        if (!auth()->user()->client_id)
-        {
+        if (!auth()->user()->client_id) {
             return redirect()->route('dashboard.index');
         }
 

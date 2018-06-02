@@ -1,18 +1,19 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
-Route::group(['middleware' => ['web', 'auth.admin'], 'namespace' => 'FI\Modules\Invoices\Controllers'], function ()
-{
-    Route::group(['prefix' => 'invoices'], function ()
-    {
+Route::group(['middleware' => ['web', 'auth.admin'], 'namespace' => 'FI\Modules\Invoices\Controllers'], function () {
+    Route::group(['prefix' => 'invoices'], function () {
         Route::get('/', ['uses' => 'InvoiceController@index', 'as' => 'invoices.index']);
         Route::get('create', ['uses' => 'InvoiceCreateController@create', 'as' => 'invoices.create']);
         Route::post('create', ['uses' => 'InvoiceCreateController@store', 'as' => 'invoices.store']);
@@ -32,20 +33,17 @@ Route::group(['middleware' => ['web', 'auth.admin'], 'namespace' => 'FI\Modules\
         Route::post('bulk/status', ['uses' => 'InvoiceController@bulkStatus', 'as' => 'invoices.bulk.status']);
     });
 
-    Route::group(['prefix' => 'invoice_copy'], function ()
-    {
+    Route::group(['prefix' => 'invoice_copy'], function () {
         Route::post('create', ['uses' => 'InvoiceCopyController@create', 'as' => 'invoiceCopy.create']);
         Route::post('store', ['uses' => 'InvoiceCopyController@store', 'as' => 'invoiceCopy.store']);
     });
 
-    Route::group(['prefix' => 'invoice_mail'], function ()
-    {
+    Route::group(['prefix' => 'invoice_mail'], function () {
         Route::post('create', ['uses' => 'InvoiceMailController@create', 'as' => 'invoiceMail.create']);
         Route::post('store', ['uses' => 'InvoiceMailController@store', 'as' => 'invoiceMail.store']);
     });
 
-    Route::group(['prefix' => 'invoice_item'], function ()
-    {
+    Route::group(['prefix' => 'invoice_item'], function () {
         Route::post('delete', ['uses' => 'InvoiceItemController@delete', 'as' => 'invoiceItem.delete']);
     });
 });

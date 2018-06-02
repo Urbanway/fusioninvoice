@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Expenses\Controllers;
@@ -29,8 +32,7 @@ class ExpenseBillController extends Controller
 
         $invoices = [];
 
-        foreach ($clientInvoices as $invoice)
-        {
+        foreach ($clientInvoices as $invoice) {
             $invoices[$invoice->id] = $invoice->formatted_created_at . ' - ' . $invoice->number . ' ' . $invoice->summary;
         }
 
@@ -48,14 +50,13 @@ class ExpenseBillController extends Controller
 
         $expense->save();
 
-        if (request('add_line_item'))
-        {
+        if (request('add_line_item')) {
             $item = [
-                'invoice_id'  => request('invoice_id'),
-                'name'        => request('item_name'),
+                'invoice_id' => request('invoice_id'),
+                'name' => request('item_name'),
                 'description' => request('item_description'),
-                'quantity'    => 1,
-                'price'       => $expense->amount,
+                'quantity' => 1,
+                'price' => $expense->amount,
             ];
 
             InvoiceItem::create($item);

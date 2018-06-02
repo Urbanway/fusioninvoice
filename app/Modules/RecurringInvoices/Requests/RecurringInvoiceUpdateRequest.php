@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\RecurringInvoices\Requests;
@@ -19,12 +22,10 @@ class RecurringInvoiceUpdateRequest extends RecurringInvoiceStoreRequest
     {
         $request = $this->all();
 
-        if (isset($request['items']))
-        {
-            foreach ($request['items'] as $key => $item)
-            {
+        if (isset($request['items'])) {
+            foreach ($request['items'] as $key => $item) {
                 $request['items'][$key]['quantity'] = NumberFormatter::unformat($item['quantity']);
-                $request['items'][$key]['price']    = NumberFormatter::unformat($item['price']);
+                $request['items'][$key]['price'] = NumberFormatter::unformat($item['price']);
             }
         }
 
@@ -34,15 +35,15 @@ class RecurringInvoiceUpdateRequest extends RecurringInvoiceStoreRequest
     public function rules()
     {
         return [
-            'summary'             => 'max:255',
-            'exchange_rate'       => 'required|numeric',
-            'template'            => 'required',
-            'next_date'           => 'required_without:stop_date',
+            'summary' => 'max:255',
+            'exchange_rate' => 'required|numeric',
+            'template' => 'required',
+            'next_date' => 'required_without:stop_date',
             'recurring_frequency' => 'numeric|required',
-            'recurring_period'    => 'required',
-            'items.*.name'        => 'required_with:items.*.price,items.*.quantity',
-            'items.*.quantity'    => 'required_with:items.*.price,items.*.name|numeric',
-            'items.*.price'       => 'required_with:items.*.name,items.*.quantity|numeric',
+            'recurring_period' => 'required',
+            'items.*.name' => 'required_with:items.*.price,items.*.quantity',
+            'items.*.quantity' => 'required_with:items.*.price,items.*.name|numeric',
+            'items.*.price' => 'required_with:items.*.name,items.*.quantity|numeric',
         ];
     }
 }

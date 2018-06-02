@@ -1,18 +1,21 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\API\Controllers;
 
-use FI\Modules\API\Requests\APIInvoiceStoreRequest;
 use FI\Modules\API\Requests\APIInvoiceItemRequest;
+use FI\Modules\API\Requests\APIInvoiceStoreRequest;
 use FI\Modules\Clients\Models\Client;
 use FI\Modules\Invoices\Models\Invoice;
 use FI\Modules\Invoices\Models\InvoiceItem;
@@ -60,13 +63,11 @@ class ApiInvoiceController extends ApiController
     {
         $validator = $this->validator->make(['id' => request('id')], ['id' => 'required']);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return response()->json($validator->errors()->all(), 400);
         }
 
-        if (Invoice::find(request('id')))
-        {
+        if (Invoice::find(request('id'))) {
             Invoice::destroy(request('id'));
 
             return response(200);

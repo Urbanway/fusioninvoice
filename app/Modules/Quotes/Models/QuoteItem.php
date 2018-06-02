@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Quotes\Models;
@@ -25,26 +28,21 @@ class QuoteItem extends Model
     {
         parent::boot();
 
-        static::deleting(function ($quoteItem)
-        {
+        static::deleting(function ($quoteItem) {
             $quoteItem->amount()->delete();
         });
 
-        static::deleted(function($quoteItem)
-        {
-            if ($quoteItem->quote)
-            {
+        static::deleted(function ($quoteItem) {
+            if ($quoteItem->quote) {
                 event(new QuoteModified($quoteItem->quote));
             }
         });
 
-        static::saving(function($quoteItem)
-        {
+        static::saving(function ($quoteItem) {
             event(new QuoteItemSaving($quoteItem));
         });
 
-        static::saved(function($quoteItem)
-        {
+        static::saved(function ($quoteItem) {
             event(new QuoteModified($quoteItem->quote));
         });
     }

@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\RecurringInvoices\Controllers;
@@ -39,33 +42,32 @@ class RecurringInvoiceCopyController extends Controller
         $fromRecurringInvoice = RecurringInvoice::find($request->input('recurring_invoice_id'));
 
         $toRecurringInvoice = RecurringInvoice::create([
-            'client_id'           => $client->id,
-            'company_profile_id'  => $request->input('company_profile_id'),
-            'group_id'            => $request->input('group_id'),
-            'currency_code'       => $fromRecurringInvoice->currency_code,
-            'exchange_rate'       => $fromRecurringInvoice->exchange_rate,
-            'terms'               => $fromRecurringInvoice->terms,
-            'footer'              => $fromRecurringInvoice->footer,
-            'template'            => $fromRecurringInvoice->template,
-            'summary'             => $fromRecurringInvoice->summary,
-            'discount'            => $fromRecurringInvoice->discount,
+            'client_id' => $client->id,
+            'company_profile_id' => $request->input('company_profile_id'),
+            'group_id' => $request->input('group_id'),
+            'currency_code' => $fromRecurringInvoice->currency_code,
+            'exchange_rate' => $fromRecurringInvoice->exchange_rate,
+            'terms' => $fromRecurringInvoice->terms,
+            'footer' => $fromRecurringInvoice->footer,
+            'template' => $fromRecurringInvoice->template,
+            'summary' => $fromRecurringInvoice->summary,
+            'discount' => $fromRecurringInvoice->discount,
             'recurring_frequency' => $request->input('recurring_frequency'),
-            'recurring_period'    => $request->input('recurring_period'),
-            'next_date'           => DateFormatter::unformat($request->input('next_date')),
-            'stop_date'           => ($request->input('stop_date') ? DateFormatter::unformat($request->input('stop_date')) : '0000-00-00'),
+            'recurring_period' => $request->input('recurring_period'),
+            'next_date' => DateFormatter::unformat($request->input('next_date')),
+            'stop_date' => ($request->input('stop_date') ? DateFormatter::unformat($request->input('stop_date')) : '0000-00-00'),
         ]);
 
-        foreach ($fromRecurringInvoice->items as $item)
-        {
+        foreach ($fromRecurringInvoice->items as $item) {
             RecurringInvoiceItem::create([
                 'recurring_invoice_id' => $toRecurringInvoice->id,
-                'name'                 => $item->name,
-                'description'          => $item->description,
-                'quantity'             => $item->quantity,
-                'price'                => $item->price,
-                'tax_rate_id'          => $item->tax_rate_id,
-                'tax_rate_2_id'        => $item->tax_rate_2_id,
-                'display_order'        => $item->display_order,
+                'name' => $item->name,
+                'description' => $item->description,
+                'quantity' => $item->quantity,
+                'price' => $item->price,
+                'tax_rate_id' => $item->tax_rate_id,
+                'tax_rate_2_id' => $item->tax_rate_2_id,
+                'display_order' => $item->display_order,
             ]);
         }
 

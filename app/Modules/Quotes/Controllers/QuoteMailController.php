@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Quotes\Controllers;
@@ -55,12 +58,9 @@ class QuoteMailController extends Controller
 
         $mail = $this->mailQueue->create($quote, $request->except('quote_id'));
 
-        if ($this->mailQueue->send($mail->id))
-        {
+        if ($this->mailQueue->send($mail->id)) {
             event(new QuoteEmailed($quote));
-        }
-        else
-        {
+        } else {
             return response()->json(['errors' => [[$this->mailQueue->getError()]]], 400);
         }
     }

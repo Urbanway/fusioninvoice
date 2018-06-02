@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Settings\Models;
@@ -28,8 +31,7 @@ class Setting extends Model
     {
         parent::boot();
 
-        static::saving(function ($setting)
-        {
+        static::saving(function ($setting) {
             event(new SettingSaving($setting));
         });
     }
@@ -45,18 +47,6 @@ class Setting extends Model
         self::where('setting_key', $key)->delete();
     }
 
-    public static function getByKey($key)
-    {
-        $setting = self::where('setting_key', $key)->first();
-
-        if ($setting)
-        {
-            return $setting->setting_value;
-        }
-
-        return null;
-    }
-
     public static function saveByKey($key, $value)
     {
         $setting = self::firstOrNew(['setting_key' => $key]);
@@ -70,23 +60,17 @@ class Setting extends Model
 
     public static function setAll()
     {
-        try
-        {
+        try {
             $settings = self::all();
 
-            foreach ($settings as $setting)
-            {
+            foreach ($settings as $setting) {
                 config(['fi.' . $setting->setting_key => $setting->setting_value]);
             }
 
             return true;
-        }
-        catch (QueryException $e)
-        {
+        } catch (QueryException $e) {
             return false;
-        }
-        catch (\PDOException $e)
-        {
+        } catch (\PDOException $e) {
             return false;
         }
     }
@@ -108,13 +92,23 @@ class Setting extends Model
             'paymentReceiptEmailSubject',
         ];
 
-        foreach ($emailTemplates as $template)
-        {
+        foreach ($emailTemplates as $template) {
             $templateContents = self::getByKey($template);
             $templateContents = str_replace('{{', '{!!', $templateContents);
             $templateContents = str_replace('}}', '!!}', $templateContents);
 
             Storage::put('email_templates/' . $template . '.blade.php', $templateContents);
         }
+    }
+
+    public static function getByKey($key)
+    {
+        $setting = self::where('setting_key', $key)->first();
+
+        if ($setting) {
+            return $setting->setting_value;
+        }
+
+        return null;
     }
 }

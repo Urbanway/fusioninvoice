@@ -1,33 +1,29 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Support;
 
 class DashboardWidgets
 {
-    public static function lists()
-    {
-        return Directory::listContents(__DIR__ . '/../Widgets/Dashboard');
-    }
-
     public static function listsByOrder()
     {
-        $widgets    = self::lists();
-        $return     = [];
+        $widgets = self::lists();
+        $return = [];
         $unassigned = 100;
 
-        foreach ($widgets as $widget)
-        {
-            if (!$displayOrder = config('fi.widgetDisplayOrder' . $widget))
-            {
+        foreach ($widgets as $widget) {
+            if (!$displayOrder = config('fi.widgetDisplayOrder' . $widget)) {
                 $displayOrder = $unassigned;
                 $unassigned++;
             }
@@ -38,5 +34,10 @@ class DashboardWidgets
         ksort($return);
 
         return $return;
+    }
+
+    public static function lists()
+    {
+        return Directory::listContents(__DIR__ . '/../Widgets/Dashboard');
     }
 }

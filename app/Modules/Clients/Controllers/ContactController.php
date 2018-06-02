@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Clients\Controllers;
@@ -30,6 +33,13 @@ class ContactController extends Controller
         Contact::create($request->all());
 
         return $this->loadContacts($clientId);
+    }
+
+    private function loadContacts($clientId)
+    {
+        return view('clients._contacts')
+            ->with('clientId', $clientId)
+            ->with('contacts', Contact::where('client_id', $clientId)->orderBy('name')->get());
     }
 
     public function edit($clientId, $id)
@@ -63,26 +73,25 @@ class ContactController extends Controller
     {
         $contact = Contact::find(request('id'));
 
-        switch (request('default'))
-        {
+        switch (request('default')) {
             case 'to':
                 $data = [
-                    'default_to'  => ($contact->default_to) ? 0 : 1,
-                    'default_cc'  => 0,
+                    'default_to' => ($contact->default_to) ? 0 : 1,
+                    'default_cc' => 0,
                     'default_bcc' => 0,
                 ];
                 break;
             case 'cc':
                 $data = [
-                    'default_to'  => 0,
-                    'default_cc'  => ($contact->default_cc) ? 0 : 1,
+                    'default_to' => 0,
+                    'default_cc' => ($contact->default_cc) ? 0 : 1,
                     'default_bcc' => 0,
                 ];
                 break;
             case 'bcc':
                 $data = [
-                    'default_to'  => 0,
-                    'default_cc'  => 0,
+                    'default_to' => 0,
+                    'default_cc' => 0,
                     'default_bcc' => ($contact->default_bcc) ? 0 : 1,
                 ];
                 break;
@@ -92,12 +101,5 @@ class ContactController extends Controller
         $contact->save();
 
         return $this->loadContacts($clientId);
-    }
-
-    private function loadContacts($clientId)
-    {
-        return view('clients._contacts')
-            ->with('clientId', $clientId)
-            ->with('contacts', Contact::where('client_id', $clientId)->orderBy('name')->get());
     }
 }

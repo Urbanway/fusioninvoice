@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Invoices\Controllers;
@@ -37,15 +40,12 @@ class InvoiceMailController extends Controller
 
         $parser = new Parser($invoice);
 
-        if (!$invoice->is_overdue)
-        {
+        if (!$invoice->is_overdue) {
             $subject = $parser->parse('invoiceEmailSubject');
-            $body    = $parser->parse('invoiceEmailBody');
-        }
-        else
-        {
+            $body = $parser->parse('invoiceEmailBody');
+        } else {
             $subject = $parser->parse('overdueInvoiceEmailSubject');
-            $body    = $parser->parse('overdueInvoiceEmailBody');
+            $body = $parser->parse('overdueInvoiceEmailBody');
         }
 
         return view('invoices._modal_mail')
@@ -66,12 +66,9 @@ class InvoiceMailController extends Controller
 
         $mail = $this->mailQueue->create($invoice, $request->except('invoice_id'));
 
-        if ($this->mailQueue->send($mail->id))
-        {
+        if ($this->mailQueue->send($mail->id)) {
             event(new InvoiceEmailed($invoice));
-        }
-        else
-        {
+        } else {
             return response()->json(['errors' => [[$this->mailQueue->getError()]]], 400);
         }
     }

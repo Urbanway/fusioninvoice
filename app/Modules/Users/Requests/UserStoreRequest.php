@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Users\Requests;
@@ -23,18 +26,18 @@ class UserStoreRequest extends FormRequest
     public function attributes()
     {
         return [
-            'email'    => trans('fi.email'),
+            'email' => trans('fi.email'),
             'password' => trans('fi.password'),
-            'name'     => trans('fi.name'),
+            'name' => trans('fi.name'),
         ];
     }
 
     public function rules()
     {
         return [
-            'email'    => 'required|email|unique:users',
+            'email' => 'required|email|unique:users',
             'password' => 'required|confirmed|min:6',
-            'name'     => 'required',
+            'name' => 'required',
         ];
     }
 }

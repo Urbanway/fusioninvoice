@@ -1,18 +1,19 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
-Route::group(['middleware' => ['web', 'auth.admin'], 'namespace' => 'FI\Modules\Quotes\Controllers'], function ()
-{
-    Route::group(['prefix' => 'quotes'], function ()
-    {
+Route::group(['middleware' => ['web', 'auth.admin'], 'namespace' => 'FI\Modules\Quotes\Controllers'], function () {
+    Route::group(['prefix' => 'quotes'], function () {
         Route::get('/', ['uses' => 'QuoteController@index', 'as' => 'quotes.index']);
         Route::get('create', ['uses' => 'QuoteCreateController@create', 'as' => 'quotes.create']);
         Route::post('create', ['uses' => 'QuoteCreateController@store', 'as' => 'quotes.store']);
@@ -32,26 +33,22 @@ Route::group(['middleware' => ['web', 'auth.admin'], 'namespace' => 'FI\Modules\
         Route::post('bulk/status', ['uses' => 'QuoteController@bulkStatus', 'as' => 'quotes.bulk.status']);
     });
 
-    Route::group(['prefix' => 'quote_copy'], function ()
-    {
+    Route::group(['prefix' => 'quote_copy'], function () {
         Route::post('create', ['uses' => 'QuoteCopyController@create', 'as' => 'quoteCopy.create']);
         Route::post('store', ['uses' => 'QuoteCopyController@store', 'as' => 'quoteCopy.store']);
     });
 
-    Route::group(['prefix' => 'quote_to_invoice'], function ()
-    {
+    Route::group(['prefix' => 'quote_to_invoice'], function () {
         Route::post('create', ['uses' => 'QuoteToInvoiceController@create', 'as' => 'quoteToInvoice.create']);
         Route::post('store', ['uses' => 'QuoteToInvoiceController@store', 'as' => 'quoteToInvoice.store']);
     });
 
-    Route::group(['prefix' => 'quote_mail'], function ()
-    {
+    Route::group(['prefix' => 'quote_mail'], function () {
         Route::post('create', ['uses' => 'QuoteMailController@create', 'as' => 'quoteMail.create']);
         Route::post('store', ['uses' => 'QuoteMailController@store', 'as' => 'quoteMail.store']);
     });
 
-    Route::group(['prefix' => 'quote_item'], function ()
-    {
+    Route::group(['prefix' => 'quote_item'], function () {
         Route::post('delete', ['uses' => 'QuoteItemController@delete', 'as' => 'quoteItem.delete']);
     });
 });

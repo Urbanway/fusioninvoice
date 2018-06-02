@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Activity\Models;
@@ -27,14 +30,11 @@ class Activity extends Model
 
     public function getFormattedActivityAttribute()
     {
-        if ($this->audit)
-        {
-            switch ($this->audit_type)
-            {
+        if ($this->audit) {
+            switch ($this->audit_type) {
                 case 'FI\Modules\Quotes\Models\Quote':
 
-                    switch ($this->activity)
-                    {
+                    switch ($this->activity) {
                         case 'public.viewed':
                             return trans('fi.activity_quote_viewed', ['number' => $this->audit->number, 'link' => route('quotes.edit', [$this->audit->id])]);
                             break;
@@ -52,8 +52,7 @@ class Activity extends Model
 
                 case 'FI\Modules\Invoices\Models\Invoice':
 
-                    switch ($this->activity)
-                    {
+                    switch ($this->activity) {
                         case 'public.viewed':
                             return trans('fi.activity_invoice_viewed', ['number' => $this->audit->number, 'link' => route('invoices.edit', [$this->audit->id])]);
                             break;

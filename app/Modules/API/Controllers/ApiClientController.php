@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\API\Controllers;
@@ -34,8 +37,7 @@ class ApiClientController extends ApiController
 
     public function show()
     {
-        if ($client = Client::getSelect()->find(request('id')))
-        {
+        if ($client = Client::getSelect()->find(request('id'))) {
             return response()->json($client);
         }
 
@@ -50,8 +52,7 @@ class ApiClientController extends ApiController
 
     public function update(APIClientUpdateRequest $request)
     {
-        if ($client = Client::getSelect()->find($request->input('id')))
-        {
+        if ($client = Client::getSelect()->find($request->input('id'))) {
             $client->fill($request->except('key', 'signature', 'timestamp', 'endpoint'));
 
             $client->save();
@@ -67,13 +68,11 @@ class ApiClientController extends ApiController
     {
         $validator = $this->validator->make(request()->only(['id']), ['id' => 'required']);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return response()->json($validator->errors()->all(), 400);
         }
 
-        if ($client = Client::getSelect()->find(request('id')))
-        {
+        if ($client = Client::getSelect()->find(request('id'))) {
             Client::destroy(request('id'));
 
             return response(200);

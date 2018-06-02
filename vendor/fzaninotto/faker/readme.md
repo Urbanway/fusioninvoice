@@ -1021,7 +1021,7 @@ echo $faker->city // "استان زنجان"
 echo $faker->contract; // "رسمی"
 ```
 
-### `Faker\Provider\fi_FI\Payment`
+### `Faker\Provider\fi_UW\Payment`
 
 ```php
 <?php
@@ -1030,7 +1030,7 @@ echo $faker->contract; // "رسمی"
 echo $faker->bankAccountNumber; // "FI8350799879879616"
 ```
 
-### `Faker\Provider\fi_FI\Person`
+### `Faker\Provider\fi_UW\Person`
 
 ```php
 <?php

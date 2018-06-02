@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Import\Controllers;
@@ -20,14 +23,14 @@ class ImportController extends Controller
     public function index()
     {
         $importTypes = [
-            'clients'      => trans('fi.clients'),
-            'quotes'       => trans('fi.quotes'),
-            'quoteItems'   => trans('fi.quote_items'),
-            'invoices'     => trans('fi.invoices'),
+            'clients' => trans('fi.clients'),
+            'quotes' => trans('fi.quotes'),
+            'quoteItems' => trans('fi.quote_items'),
+            'invoices' => trans('fi.invoices'),
             'invoiceItems' => trans('fi.invoice_items'),
-            'payments'     => trans('fi.payments'),
-            'expenses'     => trans('fi.expenses'),
-            'itemLookups'  => trans('fi.item_lookups'),
+            'payments' => trans('fi.payments'),
+            'expenses' => trans('fi.expenses'),
+            'itemLookups' => trans('fi.item_lookups'),
         ];
 
         return view('import.index')
@@ -55,15 +58,13 @@ class ImportController extends Controller
     {
         $importer = ImportFactory::create($importType);
 
-        if (!$importer->validateMap(request()->all()))
-        {
+        if (!$importer->validateMap(request()->all())) {
             return redirect()->route('import.map', [$importType])
                 ->withErrors($importer->errors())
                 ->withInput();
         }
 
-        if (!$importer->importData(request()->except('_token')))
-        {
+        if (!$importer->importData(request()->except('_token'))) {
             return redirect()->route('import.map', [$importType])
                 ->withErrors($importer->errors());
         }

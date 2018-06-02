@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\ItemLookups\Controllers;
@@ -79,13 +82,12 @@ class ItemLookupController extends Controller
 
         $list = [];
 
-        foreach ($items as $item)
-        {
+        foreach ($items as $item) {
             $list[] = [
-                'name'          => $item->name,
-                'description'   => $item->description,
-                'price'         => NumberFormatter::format($item->price),
-                'tax_rate_id'   => $item->tax_rate_id,
+                'name' => $item->name,
+                'description' => $item->description,
+                'price' => NumberFormatter::format($item->price),
+                'tax_rate_id' => $item->tax_rate_id,
                 'tax_rate_2_id' => $item->tax_rate_2_id,
             ];
         }

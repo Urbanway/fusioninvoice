@@ -1,16 +1,18 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
-Route::group(['prefix' => 'report', 'middleware' => ['web', 'auth.admin'], 'namespace' => 'FI\Modules\Reports\Controllers'], function ()
-{
+Route::group(['prefix' => 'report', 'middleware' => ['web', 'auth.admin'], 'namespace' => 'FI\Modules\Reports\Controllers'], function () {
     Route::get('client_statement', ['uses' => 'ClientStatementReportController@index', 'as' => 'reports.clientStatement']);
     Route::post('client_statement/validate', ['uses' => 'ClientStatementReportController@validateOptions', 'as' => 'reports.clientStatement.validate']);
     Route::get('client_statement/html', ['uses' => 'ClientStatementReportController@html', 'as' => 'reports.clientStatement.html']);

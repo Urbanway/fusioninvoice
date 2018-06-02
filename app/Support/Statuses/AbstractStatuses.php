@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Support\Statuses;
@@ -29,8 +32,7 @@ abstract class AbstractStatuses
 
         unset($statuses[0]);
 
-        foreach ($statuses as $key => $status)
-        {
+        foreach ($statuses as $key => $status) {
             $statuses[$key] = trans('fi.' . $status);
         }
 
@@ -41,8 +43,7 @@ abstract class AbstractStatuses
     {
         $statuses = [];
 
-        foreach (static::$statuses as $status)
-        {
+        foreach (static::$statuses as $status) {
             $statuses[$status] = trans('fi.' . $status);
         }
 

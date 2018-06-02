@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 return [
@@ -248,8 +251,6 @@ return [
     'left_pad_description'                    => 'The number of zeroes to optionally left pad the next number with.',
     'legal'                                   => 'Legal',
     'letter'                                  => 'Letter',
-    'license_agreement'                       => 'License Agreement',
-    'license_agreement_accept'                => 'I accept the terms of the license agreement',
     'logo'                                    => 'Logo',
     'mail_hash_error'                         => 'It appears your secret key has been changed since the last time you saved your email password. To fix this error, go to System Settings -> Email tab, re-enter your email password and press Save. Note that no mail will be delivered until this has been done.',
     'manual'                                  => 'Manual',
@@ -393,6 +394,7 @@ return [
     'settings'                                => 'Settings',
     'settings_successfully_saved'             => 'Settings successfully saved',
     'setup'                                   => 'Setup',
+    'setup_welcome'                           => 'Welcome to the InvoicePlane Setup!',
     'sign_in'                                 => 'Sign In',
     'sign_out'                                => 'Sign Out',
     'skin'                                    => 'Skin',
@@ -450,7 +452,7 @@ return [
     'upcoming_payment_notice_email_subject'   => 'Upcoming Payment Notice Email Subject',
     'upcoming_payment_notice_frequency'       => 'Upcoming Payment Notice Frequency',
     'upcoming_payment_notice_frequency_help'  => 'A comma separated list of days BEFORE an invoice is due to send the reminder. Leave empty to disable upcoming payment notices. For example, a value of 1,5 would send notices 1 and 5 days before the invoice is due.',
-    'update_available'                        => 'FusionInvoice :version is available to download!',
+    'update_available'                        => 'InvoicePlane :version is available to download!',
     'update_exchange_rate'                    => 'Update Exchange Rate',
     'update_not_available'                    => 'There are currently no updates available.',
     'upload_progress'                         => 'Upload Progress',
@@ -616,5 +618,5 @@ return [
 
     // 2018-4
     'force_https'                             => 'Force HTTPS',
-    'force_https_help'                        => 'Prior to enabling this option, be sure your FusionInvoice installation is functional via https. Failure to do so may result in a non-functional (but fixable) installation.',
+    'force_https_help'                        => 'Prior to enabling this option, be sure your InvoicePlane installation is functional via https. Failure to do so may result in a non-functional (but fixable) installation.',
 ];

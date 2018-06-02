@@ -2,17 +2,7 @@
 
 return [
 
-    /**
-     * Replace ReplaceThisWithYourOwnLicenseKey below with your license key found in your FusionInvoice.com account panel.
-     */
-
-    'key' => 'ReplaceThisWithYourOwnLicenseKey',
-
-
-
-    /**
-     * Values below here are not required to be changed to FusionInvoice to function.
-     */
+    'key' => env('APP_KEY', 'SomeRandomStringWith32Characters'),
 
     /*
     |--------------------------------------------------------------------------
@@ -25,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'FusionInvoice'),
+    'name' => env('APP_NAME', 'InvoicePlane'),
 
     /*
     |--------------------------------------------------------------------------
@@ -131,7 +121,7 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    'log' => env('APP_LOG', 'daily'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 

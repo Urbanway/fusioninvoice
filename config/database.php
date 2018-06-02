@@ -7,13 +7,13 @@ return [
         /**
          * This is where you configure your database.
          * Typically you should only have to configure the host, database, username and password values.
-         * FusionInvoice is designed and tested using MySQL only. Other database types may or may not work.
+         * InvoicePlane is designed and tested using MySQL only. Other database types may or may not work.
          */
         'mysql' => [
             'host'      => 'localhost',
-            'database'  => 'fusioninvoice',
+            'database'  => 'construct',
             'username'  => 'root',
-            'password'  => 'password',
+            'password'  => 'a',
             'prefix'    => '',
 
             'driver'    => 'mysql',

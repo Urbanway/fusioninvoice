@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\RecurringInvoices\Models;
@@ -29,25 +32,20 @@ class RecurringInvoiceItem extends Model
     {
         parent::boot();
 
-        static::saving(function($recurringInvoiceItem)
-        {
+        static::saving(function ($recurringInvoiceItem) {
             event(new RecurringInvoiceItemSaving($recurringInvoiceItem));
         });
 
-        static::saved(function($recurringInvoiceItem)
-        {
+        static::saved(function ($recurringInvoiceItem) {
             event(new RecurringInvoiceModified($recurringInvoiceItem->recurringInvoice));
         });
 
-        static::deleting(function ($recurringInvoiceItem)
-        {
+        static::deleting(function ($recurringInvoiceItem) {
             $recurringInvoiceItem->amount()->delete();
         });
 
-        static::deleted(function($recurringInvoiceItem)
-        {
-            if ($recurringInvoiceItem->recurringInvoice)
-            {
+        static::deleted(function ($recurringInvoiceItem) {
+            if ($recurringInvoiceItem->recurringInvoice) {
                 event(new RecurringInvoiceModified($recurringInvoiceItem->recurringInvoice));
             }
         });

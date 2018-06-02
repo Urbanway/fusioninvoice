@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\CompanyProfiles\Controllers;
@@ -45,8 +48,7 @@ class CompanyProfileController extends Controller
     {
         $input = $request->except('custom');
 
-        if ($request->hasFile('logo'))
-        {
+        if ($request->hasFile('logo')) {
             $logoFileName = $request->file('logo')->getClientOriginalName();
             $request->file('logo')->move(storage_path(), $logoFileName);
 
@@ -78,8 +80,7 @@ class CompanyProfileController extends Controller
     {
         $input = $request->except('custom');
 
-        if ($request->hasFile('logo'))
-        {
+        if ($request->hasFile('logo')) {
             $logoFileName = $request->file('logo')->getClientOriginalName();
             $request->file('logo')->move(storage_path(), $logoFileName);
 
@@ -98,12 +99,9 @@ class CompanyProfileController extends Controller
 
     public function delete($id)
     {
-        if (CompanyProfile::inUse($id))
-        {
+        if (CompanyProfile::inUse($id)) {
             $alert = trans('fi.cannot_delete_record_in_use');
-        }
-        else
-        {
+        } else {
             CompanyProfile::destroy($id);
 
             $alert = trans('fi.record_successfully_deleted');
@@ -130,14 +128,10 @@ class CompanyProfileController extends Controller
 
         $companyProfile->save();
 
-        if (file_exists(storage_path($companyProfile->logo)))
-        {
-            try
-            {
+        if (file_exists(storage_path($companyProfile->logo))) {
+            try {
                 unlink(storage_path($companyProfile->logo));
-            }
-            catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
 
             }
         }

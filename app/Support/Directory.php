@@ -1,29 +1,21 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Support;
 
 class Directory
 {
-    /**
-     * Provide a list of directory contents minus the top directory.
-     *
-     * @param  string $path
-     * @return array
-     */
-    public static function listContents($path)
-    {
-        return array_diff(scandir($path), ['.', '..']);
-    }
-
     /**
      * Provide an associative array of directory contents ['dir' => 'dir'].
      *
@@ -38,6 +30,17 @@ class Directory
     }
 
     /**
+     * Provide a list of directory contents minus the top directory.
+     *
+     * @param  string $path
+     * @return array
+     */
+    public static function listContents($path)
+    {
+        return array_diff(scandir($path), ['.', '..']);
+    }
+
+    /**
      * Provide a list of only directories.
      *
      * @param  string $path
@@ -47,10 +50,8 @@ class Directory
     {
         $directories = self::listContents($path);
 
-        foreach ($directories as $key => $directory)
-        {
-            if (!is_dir($path . '/' . $directory))
-            {
+        foreach ($directories as $key => $directory) {
+            if (!is_dir($path . '/' . $directory)) {
                 unset($directories[$key]);
             }
         }

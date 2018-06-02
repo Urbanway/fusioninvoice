@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\TaxRates\Controllers;
@@ -69,12 +72,9 @@ class TaxRateController extends Controller
     {
         $taxRate = TaxRate::find($id);
 
-        if ($taxRate->in_use)
-        {
+        if ($taxRate->in_use) {
             $alert = trans('fi.cannot_delete_record_in_use');
-        }
-        else
-        {
+        } else {
             $taxRate->delete();
 
             $alert = trans('fi.record_successfully_deleted');

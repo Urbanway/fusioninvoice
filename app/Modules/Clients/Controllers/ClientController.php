@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Clients\Controllers;
@@ -141,8 +144,7 @@ class ClientController extends Controller
 
         $list = [];
 
-        foreach ($clients as $client)
-        {
+        foreach ($clients as $client) {
             $list[]['value'] = $client->unique_name;
         }
 
@@ -182,26 +184,23 @@ class ClientController extends Controller
     {
         $client = Client::select('id')->where('unique_name', request('client_name'))->first();
 
-        if ($client)
-        {
+        if ($client) {
             return response()->json(['success' => true, 'client_id' => $client->id], 200);
         }
 
         return response()->json([
             'success' => false,
-            'errors'  => ['messages' => [trans('fi.client_not_found')]],
+            'errors' => ['messages' => [trans('fi.client_not_found')]],
         ], 400);
     }
 
     public function ajaxCheckDuplicateName()
     {
-        if (Client::where(function ($query)
-            {
+        if (Client::where(function ($query) {
                 $query->where('name', request('client_name'));
                 $query->orWhere('unique_name', request('unique_name'));
             })->where('id', '<>', request('client_id'))->count() > 0
-        )
-        {
+        ) {
             return response()->json(['is_duplicate' => 1]);
         }
 

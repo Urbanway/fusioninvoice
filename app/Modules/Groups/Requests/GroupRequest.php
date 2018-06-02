@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Groups\Requests;
@@ -23,20 +26,20 @@ class GroupRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name'     => trans('fi.name'),
-            'next_id'  => trans('fi.next_number'),
+            'name' => trans('fi.name'),
+            'next_id' => trans('fi.next_number'),
             'left_pad' => trans('fi.left_pad'),
-            'format'   => trans('fi.format'),
+            'format' => trans('fi.format'),
         ];
     }
 
     public function rules()
     {
         return [
-            'name'     => 'required',
-            'next_id'  => 'required|integer',
+            'name' => 'required',
+            'next_id' => 'required|integer',
             'left_pad' => 'required|numeric',
-            'format'   => 'required',
+            'format' => 'required',
         ];
     }
 }

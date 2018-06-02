@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Reports\Controllers;
@@ -45,8 +48,7 @@ class RevenueByClientReportController extends Controller
 
         $months = [];
 
-        foreach (range(1, 12) as $month)
-        {
+        foreach (range(1, 12) as $month) {
             $months[$month] = DateFormatter::getMonthShortName($month);
         }
 
@@ -64,8 +66,7 @@ class RevenueByClientReportController extends Controller
 
         $months = [];
 
-        foreach (range(1, 12) as $month)
-        {
+        foreach (range(1, 12) as $month) {
             $months[$month] = DateFormatter::getMonthShortName($month);
         }
 

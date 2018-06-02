@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Currencies\Support\Drivers;
@@ -18,18 +21,15 @@ class FixerIOCurrencyConverter
      *
      * @param  string $from
      * @param  string $to
-     * @return decimal
+     * @return float
      */
     public function convert($from, $to)
     {
-        try
-        {
+        try {
             $result = json_decode(file_get_contents('https://api.fixer.io/latest?base=' . $from . '&symbols=' . $to), true);
 
             return $result['rates'][strtoupper($to)];
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return '1.0000000';
         }
 

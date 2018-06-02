@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\RecurringInvoices\Models;
@@ -32,18 +35,15 @@ class RecurringInvoice extends Model
     {
         parent::boot();
 
-        static::creating(function ($recurringInvoice)
-        {
+        static::creating(function ($recurringInvoice) {
             event(new RecurringInvoiceCreating($recurringInvoice));
         });
 
-        static::created(function ($recurringInvoice)
-        {
+        static::created(function ($recurringInvoice) {
             event(new RecurringInvoiceCreated($recurringInvoice));
         });
 
-        static::deleted(function ($recurringInvoice)
-        {
+        static::deleted(function ($recurringInvoice) {
             event(new RecurringInvoiceDeleted($recurringInvoice));
         });
     }
@@ -121,8 +121,7 @@ class RecurringInvoice extends Model
 
     public function getFormattedNextDateAttribute()
     {
-        if ($this->attributes['next_date'] <> '0000-00-00')
-        {
+        if ($this->attributes['next_date'] <> '0000-00-00') {
             return DateFormatter::format($this->attributes['next_date']);
         }
 
@@ -136,8 +135,7 @@ class RecurringInvoice extends Model
 
     public function getFormattedStopDateAttribute()
     {
-        if ($this->attributes['stop_date'] <> '0000-00-00')
-        {
+        if ($this->attributes['stop_date'] <> '0000-00-00') {
             return DateFormatter::format($this->attributes['stop_date']);
         }
 
@@ -151,8 +149,7 @@ class RecurringInvoice extends Model
 
     public function getIsForeignCurrencyAttribute()
     {
-        if ($this->attributes['currency_code'] == config('fi.baseCurrency'))
-        {
+        if ($this->attributes['currency_code'] == config('fi.baseCurrency')) {
             return false;
         }
 
@@ -173,8 +170,7 @@ class RecurringInvoice extends Model
 
     public function scopeClientId($query, $clientId = null)
     {
-        if ($clientId)
-        {
+        if ($clientId) {
             $query->where('client_id', $clientId);
         }
 
@@ -183,8 +179,7 @@ class RecurringInvoice extends Model
 
     public function scopeCompanyProfileId($query, $companyProfileId = null)
     {
-        if ($companyProfileId)
-        {
+        if ($companyProfileId) {
             $query->where('company_profile_id', $companyProfileId);
         }
 
@@ -199,13 +194,11 @@ class RecurringInvoice extends Model
 
     public function scopeKeywords($query, $keywords = null)
     {
-        if ($keywords)
-        {
+        if ($keywords) {
             $keywords = strtolower($keywords);
 
             $query->where('summary', 'like', '%' . $keywords . '%')
-                ->orWhereIn('client_id', function ($query) use ($keywords)
-                {
+                ->orWhereIn('client_id', function ($query) use ($keywords) {
                     $query->select('id')->from('clients')->where(DB::raw("CONCAT_WS('^',LOWER(name),LOWER(unique_name))"), 'like', '%' . $keywords . '%');
                 });
         }
@@ -217,8 +210,7 @@ class RecurringInvoice extends Model
     {
         $query->where('next_date', '<>', '0000-00-00');
         $query->where('next_date', '<=', date('Y-m-d'));
-        $query->where(function ($q)
-        {
+        $query->where(function ($q) {
             $q->where('stop_date', '0000-00-00');
             $q->orWhere('next_date', '<=', DB::raw('stop_date'));
         });
@@ -228,8 +220,7 @@ class RecurringInvoice extends Model
 
     public function scopeStatus($query, $status)
     {
-        switch ($status)
-        {
+        switch ($status) {
             case 'active':
                 return $query->active();
             case 'inactive':

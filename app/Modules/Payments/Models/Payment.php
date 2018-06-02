@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\Payments\Models;
@@ -40,36 +43,29 @@ class Payment extends Model
 
     public static function boot()
     {
-        static::created(function ($payment)
-        {
+        static::created(function ($payment) {
             event(new InvoiceModified($payment->invoice));
             event(new PaymentCreated($payment));
         });
 
-        static::creating(function ($payment)
-        {
+        static::creating(function ($payment) {
             event(new PaymentCreating($payment));
         });
 
-        static::updated(function($payment)
-        {
+        static::updated(function ($payment) {
             event(new InvoiceModified($payment->invoice));
         });
 
-        static::deleting(function ($payment)
-        {
-            foreach ($payment->mailQueue as $mailQueue)
-            {
+        static::deleting(function ($payment) {
+            foreach ($payment->mailQueue as $mailQueue) {
                 $mailQueue->delete();
             }
 
             $payment->custom()->delete();
         });
 
-        static::deleted(function ($payment)
-        {
-            if ($payment->invoice)
-            {
+        static::deleted(function ($payment) {
+            if ($payment->invoice) {
                 event(new InvoiceModified($payment->invoice));
             }
         });
@@ -178,22 +174,18 @@ class Payment extends Model
 
     public function scopeKeywords($query, $keywords)
     {
-        if ($keywords)
-        {
+        if ($keywords) {
             $keywords = strtolower($keywords);
 
             $query->where('payments.created_at', 'like', '%' . $keywords . '%')
-                ->orWhereIn('invoice_id', function ($query) use ($keywords)
-                {
+                ->orWhereIn('invoice_id', function ($query) use ($keywords) {
                     $query->select('id')->from('invoices')->where(DB::raw('lower(number)'), 'like', '%' . $keywords . '%')
                         ->orWhere('summary', 'like', '%' . $keywords . '%')
-                        ->orWhereIn('client_id', function ($query) use ($keywords)
-                        {
+                        ->orWhereIn('client_id', function ($query) use ($keywords) {
                             $query->select('id')->from('clients')->where(DB::raw("CONCAT_WS('^',LOWER(name),LOWER(unique_name))"), 'like', '%' . $keywords . '%');
                         });
                 })
-                ->orWhereIn('payment_method_id', function ($query) use ($keywords)
-                {
+                ->orWhereIn('payment_method_id', function ($query) use ($keywords) {
                     $query->select('id')->from('payment_methods')->where(DB::raw('lower(name)'), 'like', '%' . $keywords . '%');
                 });
         }
@@ -203,10 +195,8 @@ class Payment extends Model
 
     public function scopeClientId($query, $clientId)
     {
-        if ($clientId)
-        {
-            $query->whereHas('invoice', function ($query) use ($clientId)
-            {
+        if ($clientId) {
+            $query->whereHas('invoice', function ($query) use ($clientId) {
                 $query->where('client_id', $clientId);
             });
         }
@@ -216,10 +206,8 @@ class Payment extends Model
 
     public function scopeInvoiceId($query, $invoiceId)
     {
-        if ($invoiceId)
-        {
-            $query->whereHas('invoice', function ($query) use ($invoiceId)
-            {
+        if ($invoiceId) {
+            $query->whereHas('invoice', function ($query) use ($invoiceId) {
                 $query->where('id', $invoiceId);
             });
         }
@@ -229,10 +217,8 @@ class Payment extends Model
 
     public function scopeInvoiceNumber($query, $invoiceNumber)
     {
-        if ($invoiceNumber)
-        {
-            $query->whereHas('invoice', function ($query) use ($invoiceNumber)
-            {
+        if ($invoiceNumber) {
+            $query->whereHas('invoice', function ($query) use ($invoiceNumber) {
                 $query->where('number', $invoiceNumber);
             });
         }

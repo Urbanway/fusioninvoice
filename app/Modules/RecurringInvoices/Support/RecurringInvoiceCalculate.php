@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\RecurringInvoices\Support;
@@ -18,6 +21,15 @@ use FI\Modules\RecurringInvoices\Models\RecurringInvoiceItemAmount;
 
 class RecurringInvoiceCalculate
 {
+    public function calculateAll()
+    {
+        $recurringInvoiceIds = RecurringInvoice::select('id')->get();
+
+        foreach ($recurringInvoiceIds as $recurringInvoiceId) {
+            $this->calculate($recurringInvoiceId->id);
+        }
+    }
+
     public function calculate($recurringInvoiceId)
     {
         $recurringInvoice = RecurringInvoice::find($recurringInvoiceId);
@@ -36,11 +48,10 @@ class RecurringInvoiceCalculate
         $calculator->setId($recurringInvoiceId);
         $calculator->setDiscount($recurringInvoice->discount);
 
-        foreach ($recurringInvoiceItems as $recurringInvoiceItem)
-        {
-            $taxRatePercent       = ($recurringInvoiceItem->tax_rate_id) ? $recurringInvoiceItem->tax_rate_1_percent : 0;
-            $taxRate2Percent      = ($recurringInvoiceItem->tax_rate_2_id) ? $recurringInvoiceItem->tax_rate_2_percent : 0;
-            $taxRate2IsCompound   = ($recurringInvoiceItem->tax_rate_2_is_compound) ? 1 : 0;
+        foreach ($recurringInvoiceItems as $recurringInvoiceItem) {
+            $taxRatePercent = ($recurringInvoiceItem->tax_rate_id) ? $recurringInvoiceItem->tax_rate_1_percent : 0;
+            $taxRate2Percent = ($recurringInvoiceItem->tax_rate_2_id) ? $recurringInvoiceItem->tax_rate_2_percent : 0;
+            $taxRate2IsCompound = ($recurringInvoiceItem->tax_rate_2_is_compound) ? 1 : 0;
             $taxRate1CalculateVat = ($recurringInvoiceItem->tax_rate_1_calculate_vat) ? 1 : 0;
 
             $calculator->addItem($recurringInvoiceItem->id, $recurringInvoiceItem->quantity, $recurringInvoiceItem->price, $taxRatePercent, $taxRate2Percent, $taxRate2IsCompound, $taxRate1CalculateVat);
@@ -50,11 +61,10 @@ class RecurringInvoiceCalculate
 
         // Get the calculated values
         $calculatedItemAmounts = $calculator->getCalculatedItemAmounts();
-        $calculatedAmount      = $calculator->getCalculatedAmount();
+        $calculatedAmount = $calculator->getCalculatedAmount();
 
         // Update the item amount records
-        foreach ($calculatedItemAmounts as $calculatedItemAmount)
-        {
+        foreach ($calculatedItemAmounts as $calculatedItemAmount) {
             $recurringInvoiceItemAmount = RecurringInvoiceItemAmount::firstOrNew(['item_id' => $calculatedItemAmount['item_id']]);
             $recurringInvoiceItemAmount->fill($calculatedItemAmount);
             $recurringInvoiceItemAmount->save();
@@ -64,15 +74,5 @@ class RecurringInvoiceCalculate
         $recurringInvoiceAmount = RecurringInvoiceAmount::firstOrNew(['recurring_invoice_id' => $recurringInvoiceId]);
         $recurringInvoiceAmount->fill($calculatedAmount);
         $recurringInvoiceAmount->save();
-    }
-
-    public function calculateAll()
-    {
-        $recurringInvoiceIds = RecurringInvoice::select('id')->get();
-
-        foreach ($recurringInvoiceIds as $recurringInvoiceId)
-        {
-            $this->calculate($recurringInvoiceId->id);
-        }
     }
 }

@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\API\Requests;
@@ -24,9 +27,9 @@ class APIQuoteItemRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name'     => trans('fi.name'),
+            'name' => trans('fi.name'),
             'quantity' => trans('fi.quantity'),
-            'price'    => trans('fi.price'),
+            'price' => trans('fi.price'),
         ];
     }
 
@@ -35,7 +38,7 @@ class APIQuoteItemRequest extends FormRequest
         $request = $this->all();
 
         $request['quantity'] = NumberFormatter::unformat($request['quantity']);
-        $request['price']    = NumberFormatter::unformat($request['price']);
+        $request['price'] = NumberFormatter::unformat($request['price']);
 
         $this->replace($request);
     }
@@ -44,9 +47,9 @@ class APIQuoteItemRequest extends FormRequest
     {
         return [
             'quote_id' => 'required',
-            'name'     => 'required_with:price,quantity',
+            'name' => 'required_with:price,quantity',
             'quantity' => 'required_with:price,name|numeric',
-            'price'    => 'required_with:name,quantity|numeric',
+            'price' => 'required_with:name,quantity|numeric',
         ];
     }
 }

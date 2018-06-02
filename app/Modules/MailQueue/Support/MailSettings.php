@@ -1,12 +1,15 @@
 <?php
 
 /**
- * This file is part of FusionInvoice.
+ * InvoicePlane
  *
- * (c) FusionInvoice, LLC <jessedterry@gmail.com>
+ * @package     InvoicePlane
+ * @author      InvoicePlane Developers & Contributors
+ * @copyright   Copyright (C) 2014 - 2018 InvoicePlane
+ * @license     https://invoiceplane.com/license
+ * @link        https://invoiceplane.com
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Based on FusionInvoice by Jesse Terry (FusionInvoice, LLC)
  */
 
 namespace FI\Modules\MailQueue\Support;
@@ -21,9 +24,9 @@ class MailSettings
     static function listSendMethods()
     {
         return [
-            ''         => '',
-            'smtp'     => trans('fi.email_send_method_smtp'),
-            'mail'     => trans('fi.email_send_method_phpmail'),
+            '' => '',
+            'smtp' => trans('fi.email_send_method_smtp'),
+            'mail' => trans('fi.email_send_method_phpmail'),
             'sendmail' => trans('fi.email_send_method_sendmail'),
         ];
     }
@@ -36,7 +39,7 @@ class MailSettings
     static function listEncryptions()
     {
         return [
-            '0'   => trans('fi.none'),
+            '0' => trans('fi.none'),
             'ssl' => 'SSL',
             'tls' => 'TLS',
         ];
